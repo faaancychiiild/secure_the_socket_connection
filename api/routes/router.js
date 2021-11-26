@@ -1,27 +1,32 @@
 const express = require('express');
 const router = express.Router();
-const argon = require('argon2');
+const bcrypt = require('bcrypt');
 const connect_to_db = require('../config/database');
 const User = require('../config/models');
 
 connect_to_db();
 
 router.post('/register', async (req, res) => {
-    const {username, email, password} = req.body;
+    let {username, email, password} = req.body;
     try {
         let user = await User.findOne({email});
         if(user){
-            res.json('user already exists');
+            res.status(403).json('user already exists');
         }
-        user = await new User({
-            username, 
-            email,
-            password
-        });
-        user.save();
-        res.json('user registered successfully');
+        await bcrypt.genSalt(7, (err, salt) => {
+            if(err) throw new Error;
+
+            bcrypt.hash(password, salt, (err, hash) => {
+                user = new User({
+                    username, 
+                    email,
+                    password: hash
+                });
+                user.save() && res.status(200).json('user registered successfully');
+            });
+          });
     } catch(ex){
-        console.error(ex);
+        res.status(403).json('user already exists');
     }
 
 });
