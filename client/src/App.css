@@ -1,0 +1,36 @@
+.root {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+.App {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+}
+.form-heading {
+    font-size: large;
+    text-align: center;
+}
+.form-btns {
+    display: flex;
+    justify-content: center;
+}
+.form-btn {
+    margin: 10px !important;
+}
+.form-control {
+    display: flex;
+    flex-direction: column;
+    width: 25rem;
+    margin-top: 10vh;
+    padding: 2rem;
+    background-color: greenyellow;
+    border-radius: 20px;
+}
+@media (max-width: 600px) {
+    .form-control {
+        width: 90vw;
+    }
+}
