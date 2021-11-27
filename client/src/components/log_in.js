@@ -1,30 +1,31 @@
 import '../App.css'
 import { FormControl, Button, InputLabel, Input } from "@material-ui/core";
-import requests from '../axios';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import {LogIn} from '../redux/action_creators';
-import {useNavigate} from 'react-router-dom';
+import { LogIn } from '../redux/action_creators';
 import { useEffect } from 'react';
+import requests from '../axios';
 
-const SignUpPage = () => {
+const LogInPage = () => {
     let navigate = useNavigate();
-    const dispatch = useDispatch();
+    let dispatch = useDispatch();
+    const isLoggedIn = useSelector((state) => state.logged_in);
     
     useEffect(() => {
-        console.log('app started');
-    }, []);
+        if(isLoggedIn) navigate('/');
+    }, [isLoggedIn]);
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        let {username, email, password} = e.target.elements;
+        let {email, password} = e.target.elements;
 
-        requests.register({
-            "username": username.value,
+        requests.login({
             "email": email.value,
             "password": password.value
         }).then((res) => {
             if(res.status === 200) {
-                dispatch(LogIn()) && navigate('/')
+                dispatch(LogIn()) && navigate('/');
             }
         }).catch((ex) => console.log(ex.message));
         
@@ -33,11 +34,7 @@ const SignUpPage = () => {
     return (
     <div className="App">
         <form onSubmit={handleSubmit} className='form-control'>
-            <h4 className="form-heading">Sign Up</h4>
-            <FormControl required className='form-elements' margin="dense">
-                <InputLabel htmlFor='username'>Username</InputLabel>
-                <Input name="username" type="text" placeholder="Username" id='username' className='input-element'/>
-            </FormControl>
+            <h4 className="form-heading">Log In</h4>
             <FormControl required className='form-elements' margin="dense">
                 <InputLabel htmlFor="email">Email</InputLabel>
                 <Input name="email" type="email" placeholder="Email" id="email" className='input-element'/>
@@ -47,12 +44,12 @@ const SignUpPage = () => {
                 <Input name="password" type="password" placeholder="Password" id='password' className='input-element'/>
             </FormControl>
             <div className="form-btns">
-                <Button margin="normal" variant='contained' type="submit" className='form-btn'>Sign Up</Button>
-                <Button onClick={() => navigate('/log_in')} margin="dense" variant='contained' className='form-btn'>Log in</Button>
+                <Button margin="normal" variant='contained' type="submit" className='form-btn'>Log In</Button>
+                <Button onClick={() => navigate('/sign_up')} margin="dense" variant='contained' className='form-btn'>Sign Up</Button>
             </div>
         </form>
     </div>
     );
 }
 
-export default SignUpPage;
+export default LogInPage;

@@ -5,6 +5,6 @@ const parser = require('body-parser');
 
 app.use(cors());
 app.use(parser.json());
-app.use(router);
+app.use('/', router);
 
 module.exports = app;
