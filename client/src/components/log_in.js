@@ -3,7 +3,7 @@ import { FormControl, Button, InputLabel, Input } from "@material-ui/core";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { LogIn } from '../redux/action_creators';
+import { LogIn, SetEmail } from '../redux/action_creators';
 import { useEffect } from 'react';
 import requests from '../axios';
 
@@ -25,7 +25,11 @@ const LogInPage = () => {
             "password": password.value
         }).then((res) => {
             if(res.status === 200) {
-                dispatch(LogIn()) && navigate('/');
+                dispatch(LogIn()) && dispatch(SetEmail(email.value)) && navigate('/');
+                localStorage.setItem('authState', JSON.stringify({
+                    "email": email.value,
+                    "logged_in": true
+                }));
             }
         }).catch((ex) => console.log(ex.message));
         

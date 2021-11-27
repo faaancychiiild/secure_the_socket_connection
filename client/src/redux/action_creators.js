@@ -8,3 +8,9 @@ export const LogOut = () => {
         type: 'log_out'
     }
 }
+export const SetEmail = (email) => {
+    return {
+        type: 'set_email',
+        email
+    }
+}

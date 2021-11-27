@@ -4,6 +4,9 @@ const connect_to_db = require('../config/database');
 
 connect_to_db();
 
+/*
+@handler functions are separated from the router file
+*/
 const RegisterHandler = require('./handlers/register');
 const LoginHandler = require('./handlers/login');
 
