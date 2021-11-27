@@ -1,7 +1,7 @@
 import { createStore } from 'redux';
 
 let localstate = JSON.parse(localStorage.getItem('authState'));
-let { logged_in, email } = localstate;
+let { logged_in, email } = localstate || {};
 
 const initialState = {
   logged_in: logged_in || false,
