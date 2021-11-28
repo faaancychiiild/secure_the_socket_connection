@@ -3,18 +3,13 @@ import { FormControl, Button, InputLabel, Input } from "@material-ui/core";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { LogIn, SetEmail } from '../redux/action_creators';
+import { CountLogs, SetEmail } from '../redux/action_creators';
 import { useEffect } from 'react';
 import requests from '../axios';
 
 const LogInPage = () => {
     let navigate = useNavigate();
     let dispatch = useDispatch();
-    const isLoggedIn = useSelector((state) => state.logged_in);
-    
-    useEffect(() => {
-        if(isLoggedIn) navigate('/');
-    }, [isLoggedIn, navigate]);
     
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -25,8 +20,8 @@ const LogInPage = () => {
             "password": password.value
         }).then((res) => {
             if(res.status === 200) {
-                let {access_token, refresh_token } = res;
-                dispatch(LogIn()) && dispatch(SetEmail(email.value)) && navigate('/');
+                let {access_token, refresh_token } = res.data;
+                dispatch(CountLogs(res.logCount)) && dispatch(SetEmail(email.value)) && navigate('/');
                 localStorage.setItem('authState', JSON.stringify({
                     "email": email.value,
                     access_token,

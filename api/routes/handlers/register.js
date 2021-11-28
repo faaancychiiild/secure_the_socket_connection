@@ -1,8 +1,18 @@
-const User = require('../../config/models');
+const { User, Count } = require('../../config/models');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const { Observable } = require('rxjs');
 const { observer } = require('./fetch_users');
+
+const countHandler = () => {
+    Count.findOne({}, (err, doc) => {
+        if(doc === null){
+            new Count({users: 1}).save();
+            return;
+        }
+        doc.users += 1;
+        doc.save();
+    });
+}
 
 const RegisterHandler = async (req, res) => {
     let {username, email, password} = req.body;
@@ -21,20 +31,21 @@ const RegisterHandler = async (req, res) => {
                 user = new User({
                     username, 
                     email,
+                    logCount: 1,
                     password: hash
                 });
                 //assign json web token
-                let refresh_token = require('./tokens').refresh(user._id.str);
-                let access_token = require('./tokens').access(user._id.str);
+                let refresh_token = require('./gen_tokens').refresh(user._id.str);
+                let access_token = require('./gen_tokens').access(user._id.str);
                 user.token = refresh_token;
                 user.save();
+                countHandler();
                 res.status(200).json({
                     refresh_token: user.token,
                     access_token
                 });
             });
         });
-
         //Launch an observable to listen for registered users
         const observable = new Observable(subscriber => {
             subscriber.next('new user registered');

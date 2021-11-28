@@ -14,10 +14,15 @@ const fetchUserCount = () => {
     return axios.get(base_url.concat('/fetch/users')).then(res => res);
 }
 
+const verifyAccess = (token, email, refresh) => {
+    return axios.post(base_url.concat('/verify_access_token'), {token, email, refresh}).then(res => res);
+}
+
 const requests = {
     register, 
     login,
-    fetchUserCount
+    fetchUserCount,
+    verifyAccess
 }
 
 export default requests;

@@ -1,6 +1,7 @@
-export const LogIn = () => {
+export const CountLogs = (logs) => {
     return {
-        type: 'log_in'
+        type: 'count_logs',
+        logs
     }
 }
 export const SetEmail = (email) => {

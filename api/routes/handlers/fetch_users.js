@@ -1,13 +1,13 @@
-const User = require('../../config/models');
+const { Count } = require('../../config/models');
 const { Observable } = require('rxjs');
 //define global variable to count users
 
 let userCount;
 
 const FetchUsers = (req, res) => {
-    User.find().count({}, (err, num) => {
+    Count.findOne({}, (err, doc) => {
         if(err) return;
-        userCount = num;
+        doc === null ? userCount = 0 : userCount = doc.users;
         let observer_2 = {
             next: () => {
                 res.write(

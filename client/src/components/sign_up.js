@@ -2,7 +2,7 @@ import '../App.css'
 import { FormControl, Button, InputLabel, Input } from "@material-ui/core";
 import requests from '../axios';
 import { useDispatch } from 'react-redux';
-import {LogIn, SetEmail} from '../redux/action_creators';
+import {SetEmail} from '../redux/action_creators';
 import {useNavigate} from 'react-router-dom';
 import { useEffect } from 'react';
 
@@ -24,13 +24,12 @@ const SignUpPage = () => {
             "password": password.value
         }).then((res) => {
             if(res.status === 200) {
-                let {access_token, refresh_token } = res;
+                let {access_token, refresh_token } = res.data;
                 localStorage.setItem('authState', JSON.stringify({
-                    "email": email.value,
                     access_token,
                     refresh_token
                 }));
-                dispatch(LogIn()) && dispatch(SetEmail(email.value)) && navigate('/');
+                dispatch(SetEmail(email.value)) && navigate('/');
             }
         }).catch((ex) => console.log(ex.message));
         

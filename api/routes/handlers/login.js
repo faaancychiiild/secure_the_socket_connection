@@ -8,7 +8,15 @@ const LoginHandler = async (req, res) => {
         bcrypt.compare(password, user.password, (err, resolve) => {
             if(err) res.status(403).json(err);
             if(resolve){
-                res.status(200).json(resolve);
+                user.logCount += 1;
+                user.save();
+                let refresh_token = require('./gen_tokens').refresh(user._id.str);
+                let access_token = require('./gen_tokens').access(user._id.str);
+                res.status(200).json({
+                    refresh_token: user.token,
+                    access_token,
+                    logCount: user.logCount
+                });
                 return; 
             }
             res.status(403).json('credentials do not match');
