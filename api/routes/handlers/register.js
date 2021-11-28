@@ -1,6 +1,8 @@
 const User = require('../../config/models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { Observable } = require('rxjs');
+const { observer } = require('./fetch_users');
 
 const RegisterHandler = async (req, res) => {
     let {username, email, password} = req.body;
@@ -32,6 +34,12 @@ const RegisterHandler = async (req, res) => {
                 });
             });
         });
+
+        //Launch an observable to listen for registered users
+        const observable = new Observable(subscriber => {
+            subscriber.next('new user registered');
+        });
+        observable.subscribe(observer);
     }catch(ex){
         res.status(403).end();
     }

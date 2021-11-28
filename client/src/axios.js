@@ -11,8 +11,7 @@ const login = (object) => {
 }
 
 const fetchUserCount = () => {
-    console.log('request sent');
-    return axios.get(base_url.concat('/fetch/users')).then(res => console.log(res));
+    return axios.get(base_url.concat('/fetch/users')).then(res => res);
 }
 
 const requests = {

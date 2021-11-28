@@ -15,7 +15,13 @@ const HomePage = () => {
         
         //setup event-sent connection between client and server
         const eventsrc = new EventSource('http://localhost:4000/fetch/users');
-        eventsrc.onmessage = e => setUserCount(e.data);
+        eventsrc.onmessage = e => {
+            /*
+            @alert for every 3rd user registered
+            */
+            // if(Number(e.data) % 3 === 0) alert("You're lucky person :)");
+            setUserCount(e.data)
+        };
         //cleanup function for useEffect hook
         return () => {
             eventsrc.close();

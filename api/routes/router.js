@@ -10,7 +10,7 @@ connect_to_db();
 */
 const RegisterHandler = require('./handlers/register');
 const LoginHandler = require('./handlers/login');
-const FetchUsers = require('./handlers/fetch_users');
+const { FetchUsers } = require('./handlers/fetch_users');
 
 router.post('/register', RegisterHandler);
 router.post('/login', LoginHandler);
