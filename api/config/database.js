@@ -8,7 +8,7 @@ const connect = () => {
         useUnifiedTopology: true
     })
     .then(() => console.log('MongoDB atlas is connected :)'))
-    .catch((ex) => console.log(ex.message));
+    .catch(ex => console.log(ex.message));
 }
 
 module.exports = connect;

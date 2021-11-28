@@ -24,6 +24,12 @@ const SignUpPage = () => {
             "password": password.value
         }).then((res) => {
             if(res.status === 200) {
+                let {access_token, refresh_token } = res;
+                localStorage.setItem('authState', JSON.stringify({
+                    "email": email.value,
+                    access_token,
+                    refresh_token
+                }));
                 dispatch(LogIn()) && dispatch(SetEmail(email.value)) && navigate('/');
             }
         }).catch((ex) => console.log(ex.message));

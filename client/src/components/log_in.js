@@ -14,7 +14,7 @@ const LogInPage = () => {
     
     useEffect(() => {
         if(isLoggedIn) navigate('/');
-    }, [isLoggedIn]);
+    }, [isLoggedIn, navigate]);
     
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -25,10 +25,12 @@ const LogInPage = () => {
             "password": password.value
         }).then((res) => {
             if(res.status === 200) {
+                let {access_token, refresh_token } = res;
                 dispatch(LogIn()) && dispatch(SetEmail(email.value)) && navigate('/');
                 localStorage.setItem('authState', JSON.stringify({
                     "email": email.value,
-                    "logged_in": true
+                    access_token,
+                    refresh_token
                 }));
             }
         }).catch((ex) => console.log(ex.message));
