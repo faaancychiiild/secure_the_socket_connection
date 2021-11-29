@@ -1,7 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
 .root {
     height: 100%;
     padding: 0;
     margin: 0;
+}
+.container {
+    font-family: 'Poppins';
 }
 .App {
     display: flex;
@@ -20,14 +25,16 @@
 .form-btn {
     margin: 10px !important;
 }
-.form-control {
+.form-control, .page-stats{
     display: flex;
     flex-direction: column;
     width: 25rem;
     margin-top: 10vh;
     padding: 2rem;
-    background-color: greenyellow;
     border-radius: 20px;
+}
+.form-control {
+    background-color: greenyellow;
 }
 @media (max-width: 600px) {
     .form-control {
@@ -35,6 +42,23 @@
     }
 }
 .page-stats {
-    width: 100%;
     text-align: center;
+    background-color: black;
+    color: chartreuse;
+    margin: 5vw;
+}
+.logout {
+    float: right;
+}
+.header {
+    display: flex;
+    justify-content: end;
+}
+.user-logs {
+    font-size: 1.5rem;
+    text-align: center;
+}
+.stats {
+    display: flex;
+    justify-content: center;
 }

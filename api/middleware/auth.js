@@ -17,17 +17,19 @@ const VerifyToken = async (req, res, next) => {
         if(!ref){
             //If refresh token is also null, server will response with 403
             res.status(403).end();
+            return;
         }
-        //Else a new access token is generated and sent to the user
-        let token = require('./gen_tokens').refresh(user._id.str);
-        res.send(token);
+        //Else a new access token is generated and request body is modified
+        let token = require('../routes/handlers/gen_tokens').access(user._id.str);
+        req.body.token = token;
     };
     if(acc.exp < Date.now()/1000){
         //Handles with expired access tokens
-        let token = require('./gen_tokens').refresh(user._id.str);
-        res.send(token);
+        let token = require('./gen_tokens').access(user._id.str);
+        req.body.token = token;
     }
-     next();
+    
+    next();
 }
 
 module.exports = VerifyToken;

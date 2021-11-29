@@ -7,11 +7,13 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route exact path='/' element={<HomePage />}></Route>
-        <Route exact path='/sign_up' element={<SignUpPage />}></Route>
-        <Route exact path='/log_in' element={<LogInPage />}></Route>
-      </Routes>
+      <div className="container">
+        <Routes>
+          <Route exact path='/' element={<HomePage />}></Route>
+          <Route exact path='/sign_up' element={<SignUpPage />}></Route>
+          <Route exact path='/log_in' element={<LogInPage />}></Route>
+        </Routes>
+      </div>
     </BrowserRouter>
   );
 }

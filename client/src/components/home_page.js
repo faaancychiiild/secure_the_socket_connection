@@ -42,6 +42,7 @@ const HomePage = () => {
         socket.emit('joined', 'authRoom');
         socket.on('registered', () => {
             dispatch(SetUserCount(userCount+=1));
+            if(userCount > 3) alert("You're a lucky person :)")
         });
         //cleanup function for useEffect hook
         return () => {
@@ -54,17 +55,31 @@ const HomePage = () => {
         localStorage.setItem('authState', "{}");
         navigate('/log_in');
     }
+
+    const handleLogs = () => {
+        if(logs % 10 === 1) return `${logs}st`;
+        if(logs % 10 === 2) return `${logs}nd`;
+        if(logs % 10 === 3) return `${logs}rd`;
+        return `${logs}th`;
+    }
     
     return (
-        <section>
-            <Button onClick={handleClick} margin="normal" variant='contained' className='form-btn float-right'>Log Out</Button>
-            <h2>Welcome {userEmail} </h2>
-            <div className="page-stats">
-                <h2>Page Stats</h2>
-                <h3>Total: {userCount} users</h3>
-                <h3>Total: {logs} logs</h3>
+        <>
+            <div className="header">
+                <p className="welcome">Welcome {userEmail} </p>
+                <Button className="logout" onClick={handleClick} margin="normal" variant='contained' className='form-btn float-right'>Log Out</Button>
             </div>
-        </section>
+            <section className="stats">
+                <div className="page-stats">
+                    <h2>Website Stats</h2>
+                    <h3>Total: {userCount} users</h3>
+                </div>
+                <div className="page-stats">
+                    <h2>Your Stats</h2>
+                    <h3>It's your { handleLogs() } log</h3>
+                </div>
+            </section>
+        </>
     );
 }
 

@@ -8,8 +8,8 @@ let IndexObserver = {
 }
 module.exports = { IndexObserver };
 /*
-*თავდაპირველად ობიექტი გავიტანოთ ექსპორტით, რადგან აღნიშნულ Observer-ს ვიყენებთ სხვა მოდულში.
-*წინააღმდეგ შემთხვევაში დაგვიბრუნდება Circular dependency პრობლემა
+*თავდაპირველად, ობიექტი გავიტანოთ export-ით, რადგან აღნიშნულ Observer-ს ვიყენებთ სხვა მოდულში.
+*სხვა შემთხვევაში დაგვიბრუნდება Circular dependency პრობლემა
 */
 
 const app = require('./app/app');
