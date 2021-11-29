@@ -29,6 +29,7 @@ const HomePage = () => {
         }
         requests.fetchPageStats(access_token, userEmail, refresh_token)
             .then(res => {
+                if(!res) navigate('/log_in');
                 setUserCount(res.data);
             })
             .catch(err => {
@@ -42,7 +43,7 @@ const HomePage = () => {
         return () => {
             socket.off();
         }
-    }, [access_token, navigate, userEmail, refresh_token]);
+    }, [access_token, navigate, userEmail, refresh_token, userCount]);
 
     const handleClick = (e) => {
         e.preventDefault();

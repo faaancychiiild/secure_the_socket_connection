@@ -1,4 +1,4 @@
-const User = require('../../config/models');
+const {User} = require('../../config/models');
 const bcrypt = require('bcrypt');
 
 const LoginHandler = async (req, res) => {
@@ -13,7 +13,7 @@ const LoginHandler = async (req, res) => {
                 let refresh_token = require('./gen_tokens').refresh(user._id.str);
                 let access_token = require('./gen_tokens').access(user._id.str);
                 res.status(200).json({
-                    refresh_token: user.token,
+                    refresh_token,
                     access_token,
                     logCount: user.logCount
                 });

@@ -2,9 +2,14 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const { User } = require('../config/models');
 
-const VerifyToken = (req, res, next) => {
-    let user = User.findOne({email: req.body.email});
-    let acc = jwt.verify(req.body.token, process.env.ACCESS_TOKEN_KEY);
+const VerifyToken = async (req, res, next) => {
+    let user = await User.findOne({email: req.body.email});
+    if(!user) {
+        res.status(403).end();
+        return;
+    }
+
+    let acc = await jwt.verify(req.body.token, process.env.ACCESS_TOKEN_KEY);
     
     if(!acc){
         //If access token is null, server will verify the refresh token

@@ -7,6 +7,7 @@ const countHandler = () => {
     Count.findOne({}, (err, doc) => {
         if(doc === null){
             new Count({users: 1}).save();
+            return;
         }
         doc.users += 1;
         doc.save();

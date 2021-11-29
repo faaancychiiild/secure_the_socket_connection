@@ -1,6 +1,6 @@
 const { Count } = require('../../config/models');
 const { Observable } = require('rxjs');
-const {IndexObserver} = require('../../index');
+const IndexObserver = require('../../index');
 //define global variable to count users
 
 let userCount;
@@ -17,7 +17,7 @@ const observer = {
 }
 
 const FetchStats = (req, res) => {
-    console.log(IndexObserver);
+    console.log(IndexObserver, "register")
     Count.findOne({}, (err, doc) => {
         if(err) return;
         doc === null ? userCount = 0 : userCount = doc.users;

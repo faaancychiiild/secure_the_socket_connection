@@ -1,10 +1,8 @@
 import '../App.css'
 import { FormControl, Button, InputLabel, Input } from "@material-ui/core";
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { CountLogs, SetEmail } from '../redux/action_creators';
-import { useEffect } from 'react';
 import requests from '../axios';
 
 const LogInPage = () => {
@@ -21,12 +19,13 @@ const LogInPage = () => {
         }).then((res) => {
             if(res.status === 200) {
                 let {access_token, refresh_token } = res.data;
-                dispatch(CountLogs(res.logCount)) && dispatch(SetEmail(email.value)) && navigate('/');
+                //localStorage updated with tokens
                 localStorage.setItem('authState', JSON.stringify({
                     "email": email.value,
                     access_token,
                     refresh_token
                 }));
+                dispatch(CountLogs(res.data.logCount)) && dispatch(SetEmail(email.value)) && navigate('/');
             }
         }).catch((ex) => console.log(ex.message));
         

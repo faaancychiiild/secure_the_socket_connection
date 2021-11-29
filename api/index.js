@@ -12,7 +12,7 @@ const io = require('socket.io')(server, {
 /* 
 This observer will go to get_stats.js
 */
-const IndexObserver = {
+exports = {
     next: () => {
         console.log('hisashiburi')
         io.to('authRoom').emit('registered')
@@ -29,5 +29,3 @@ io.on('connection', socket => {
         console.log('User has just left');
     });
 });
-
-module.exports = { IndexObserver };
