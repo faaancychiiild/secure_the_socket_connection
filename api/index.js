@@ -1,3 +1,17 @@
+/* 
+This observer will go to get_stats.js
+*/
+let IndexObserver = {
+    next: () => {
+        io.to('authRoom').emit('registered')
+    }
+}
+module.exports = { IndexObserver };
+/*
+*თავდაპირველად ობიექტი გავიტანოთ ექსპორტით, რადგან აღნიშნულ Observer-ს ვიყენებთ სხვა მოდულში.
+*წინააღმდეგ შემთხვევაში დაგვიბრუნდება Circular dependency პრობლემა
+*/
+
 const app = require('./app/app');
 const http = require('http');
 const port = process.env.PORT || 3000;
@@ -9,15 +23,6 @@ const io = require('socket.io')(server, {
       origin: "*"
     }
 });
-/* 
-This observer will go to get_stats.js
-*/
-exports = {
-    next: () => {
-        console.log('hisashiburi')
-        io.to('authRoom').emit('registered')
-    }
-}
 server.listen(port, () => {
     console.log('Server is running on port :%s', port);
 });

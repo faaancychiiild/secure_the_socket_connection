@@ -38,7 +38,7 @@ const HomePage = () => {
         //setup socket connection between clients and server
         socket = io('http://localhost:4000');
         socket.emit('joined', 'authRoom');
-        socket.on('registered', () => setUserCount(userCount++));
+        socket.on('registered', () => alert('users count' + userCount++));
         //cleanup function for useEffect hook
         return () => {
             socket.off();

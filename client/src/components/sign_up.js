@@ -2,7 +2,7 @@ import '../App.css'
 import { FormControl, Button, InputLabel, Input } from "@material-ui/core";
 import requests from '../axios';
 import { useDispatch } from 'react-redux';
-import {SetEmail} from '../redux/action_creators';
+import {SetEmail, CountLogs } from '../redux/action_creators';
 import {useNavigate} from 'react-router-dom';
 import { useEffect } from 'react';
 
@@ -30,7 +30,7 @@ const SignUpPage = () => {
                     access_token,
                     refresh_token
                 }));
-                dispatch(SetEmail(email.value)) && navigate('/');
+                dispatch(SetEmail(email.value)) && dispatch(CountLogs(res.data.logCount)) && navigate('/');
             }
         }).catch((ex) => console.log(ex.message));
         

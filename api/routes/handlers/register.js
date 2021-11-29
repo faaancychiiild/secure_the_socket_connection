@@ -43,7 +43,8 @@ const RegisterHandler = async (req, res) => {
                 
                 res.status(200).json({
                     refresh_token: user.token,
-                    access_token
+                    access_token,
+                    logCount: user.logCount
                 });
             });
         });
