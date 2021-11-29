@@ -11,11 +11,11 @@ const login = (object) => {
 }
 
 const fetchPageStats = (token, email, refresh) => {
-    return axios.post(base_url.concat('/fetch_page_stats'), {token, email, refresh}).then(res => res);
+    return axios.post(base_url.concat('/fetch_page_stats'), { token, email, refresh }).then(res => res);
 }
 
 const requests = {
-    register, 
+    register,
     login,
     fetchPageStats
 }

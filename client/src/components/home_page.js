@@ -16,7 +16,7 @@ const HomePage = () => {
     //Declare tokens and give them values later
     let access_token, refresh_token;
     //check the localStorage
-    if(storage){
+    if (storage) {
         [access_token, refresh_token] = [storage.access_token, storage.refresh_token];
     }
     let logs = useSelector(state => state.logCount);
@@ -25,24 +25,24 @@ const HomePage = () => {
 
     useEffect(() => {
 
-        if(!access_token || !refresh_token || !userEmail){
+        if (!access_token || !refresh_token || !userEmail) {
             navigate('/log_in');
             return;
         }
         requests.fetchPageStats(access_token, userEmail, refresh_token)
             .then(res => {
-                if(!res) navigate('/log_in');
+                if (!res) navigate('/log_in');
                 dispatch(SetUserCount(res.data));
             })
             .catch(err => {
                 navigate('/log_in');
-        });
+            });
         //setup socket connection between clients and server
         socket = io('http://localhost:4000');
         socket.emit('joined', 'authRoom');
         socket.on('registered', () => {
-            dispatch(SetUserCount(userCount+=1));
-            if(userCount > 3) alert("You're a lucky person :)")
+            dispatch(SetUserCount(userCount += 1));
+            if (userCount > 3) alert("You're a lucky person :)")
         });
         //cleanup function for useEffect hook
         return () => {
@@ -57,12 +57,12 @@ const HomePage = () => {
     }
 
     const handleLogs = () => {
-        if(logs % 10 === 1) return `${logs}st`;
-        if(logs % 10 === 2) return `${logs}nd`;
-        if(logs % 10 === 3) return `${logs}rd`;
+        if (logs % 10 === 1) return `${logs}st`;
+        if (logs % 10 === 2) return `${logs}nd`;
+        if (logs % 10 === 3) return `${logs}rd`;
         return `${logs}th`;
     }
-    
+
     return (
         <>
             <div className="header">
@@ -76,7 +76,7 @@ const HomePage = () => {
                 </div>
                 <div className="page-stats">
                     <h2>Your Stats</h2>
-                    <h3>It's your { handleLogs() } log</h3>
+                    <h3>It's your {handleLogs()} log</h3>
                 </div>
             </section>
         </>
