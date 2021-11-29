@@ -28,7 +28,8 @@ const SignUpPage = () => {
                 localStorage.setItem('authState', JSON.stringify({
                     email: email.value,
                     access_token,
-                    refresh_token
+                    refresh_token,
+                    logCount: res.data.logCount
                 }));
                 dispatch(SetEmail(email.value)) && dispatch(CountLogs(res.data.logCount)) && navigate('/');
             }

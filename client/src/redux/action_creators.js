@@ -10,3 +10,9 @@ export const SetEmail = (email) => {
         email
     }
 }
+export const SetUserCount = (count) => {
+    return {
+        type: 'set_user_count',
+        count
+    }
+}

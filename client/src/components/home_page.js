@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { SetUserCount } from '../redux/action_creators';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import io from 'socket.io-client';
@@ -9,7 +10,7 @@ import '../App.css';
 let socket;
 
 const HomePage = () => {
-    let [userCount, setUserCount] = useState();
+    let dispatch = useDispatch();
     let navigate = useNavigate();
     let storage = JSON.parse(localStorage.getItem('authState'));
     //Declare tokens and give them values later
@@ -20,6 +21,7 @@ const HomePage = () => {
     }
     let logs = useSelector(state => state.logCount);
     let userEmail = useSelector(state => state.email);
+    let userCount = useSelector(state => state.userCount);
 
     useEffect(() => {
 
@@ -30,7 +32,7 @@ const HomePage = () => {
         requests.fetchPageStats(access_token, userEmail, refresh_token)
             .then(res => {
                 if(!res) navigate('/log_in');
-                setUserCount(res.data);
+                dispatch(SetUserCount(res.data));
             })
             .catch(err => {
                 navigate('/log_in');
@@ -38,7 +40,9 @@ const HomePage = () => {
         //setup socket connection between clients and server
         socket = io('http://localhost:4000');
         socket.emit('joined', 'authRoom');
-        socket.on('registered', () => alert('users count' + userCount++));
+        socket.on('registered', () => {
+            dispatch(SetUserCount(userCount+=1));
+        });
         //cleanup function for useEffect hook
         return () => {
             socket.off();
