@@ -1,13 +1,12 @@
 const { User, Count } = require('../../config/models');
 const bcrypt = require('bcrypt');
 const { Observable } = require('rxjs');
-const { observer } = require('./fetch_users');
+const { observer } = require('./get_stats');
 
 const countHandler = () => {
     Count.findOne({}, (err, doc) => {
         if(doc === null){
             new Count({users: 1}).save();
-            return;
         }
         doc.users += 1;
         doc.save();
@@ -26,7 +25,7 @@ const RegisterHandler = async (req, res) => {
         await bcrypt.genSalt(7, (err, salt) => {
             if(err) throw new Error;
 
-            bcrypt.hash(password, salt, (err, hash) => {
+            bcrypt.hash(password, salt, async (err, hash) => {
                 if(err) res.status(500).end();
                 user = new User({
                     username, 
@@ -34,12 +33,13 @@ const RegisterHandler = async (req, res) => {
                     logCount: 1,
                     password: hash
                 });
+                countHandler();
                 //assign json web token
-                let refresh_token = require('./gen_tokens').refresh(user._id.str);
-                let access_token = require('./gen_tokens').access(user._id.str);
+                let refresh_token = await require('./gen_tokens').refresh(user._id.str);
+                let access_token = await require('./gen_tokens').access(user._id.str);
                 user.token = refresh_token;
                 user.save();
-                countHandler();
+                
                 res.status(200).json({
                     refresh_token: user.token,
                     access_token
@@ -47,10 +47,9 @@ const RegisterHandler = async (req, res) => {
             });
         });
         //Launch an observable to listen for registered users
-        const observable = new Observable(subscriber => {
+        new Observable(subscriber => {
             subscriber.next('new user registered');
-        });
-        observable.subscribe(observer);
+        }).subscribe(observer);
     }catch(ex){
         res.status(403).end();
     }

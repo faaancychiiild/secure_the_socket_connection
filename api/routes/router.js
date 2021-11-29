@@ -10,12 +10,10 @@ connect_to_db();
 */
 const RegisterHandler = require('./handlers/register');
 const LoginHandler = require('./handlers/login');
-const { FetchUsers } = require('./handlers/fetch_users');
-const { VerifyAccess } = require('./handlers/ver_tokens');
+const { FetchStats } = require('./handlers/get_stats');
 
 router.post('/register', RegisterHandler);
 router.post('/login', LoginHandler);
-router.get('/fetch/users', FetchUsers);
-router.post('/verify_access_token', VerifyAccess);
+router.post('/fetch_page_stats', auth, FetchStats);
 
 module.exports = router;

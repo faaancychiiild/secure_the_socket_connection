@@ -26,6 +26,7 @@ const SignUpPage = () => {
             if(res.status === 200) {
                 let {access_token, refresh_token } = res.data;
                 localStorage.setItem('authState', JSON.stringify({
+                    email: email.value,
                     access_token,
                     refresh_token
                 }));
