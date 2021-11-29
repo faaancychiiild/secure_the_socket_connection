@@ -67,7 +67,7 @@ const HomePage = () => {
         <>
             <div className="header">
                 <p className="welcome">Welcome {userEmail} </p>
-                <Button className="logout" onClick={handleClick} margin="normal" variant='contained' className='form-btn float-right'>Log Out</Button>
+                <Button className="logout form-btn " onClick={handleClick} margin="normal" variant='contained'>Log Out</Button>
             </div>
             <section className="stats">
                 <div className="page-stats">

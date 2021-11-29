@@ -19,4 +19,4 @@ const access = (iss) => jwt.sign(
 
 
 
-module.exports = {refresh, access}
+module.exports = { refresh, access }

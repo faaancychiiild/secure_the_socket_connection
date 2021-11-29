@@ -1,13 +1,13 @@
-const {User} = require('../../config/models');
+const { User } = require('../../config/models');
 const bcrypt = require('bcrypt');
 
 const LoginHandler = async (req, res) => {
     try {
-        let {email, password} = req.body;
-        let user = await User.findOne({email});
+        let { email, password } = req.body;
+        let user = await User.findOne({ email });
         bcrypt.compare(password, user.password, (err, resolve) => {
-            if(err) res.status(403).json(err);
-            if(resolve){
+            if (err) res.status(403).json(err);
+            if (resolve) {
                 user.logCount += 1;
                 user.save();
                 let refresh_token = require('./gen_tokens').refresh(user._id.str);
@@ -17,11 +17,11 @@ const LoginHandler = async (req, res) => {
                     access_token,
                     logCount: user.logCount
                 });
-                return; 
+                return;
             }
             res.status(403).json('credentials do not match');
         });
-    } catch(ex){
+    } catch (ex) {
         res.status(403).json(ex.message);
     }
 }

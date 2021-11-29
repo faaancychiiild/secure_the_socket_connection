@@ -18,10 +18,10 @@ const observer = {
 
 const FetchStats = (req, res) => {
     Count.findOne({}, (err, doc) => {
-        if(err) return;
+        if (err) return;
         doc === null ? userCount = 0 : userCount = doc.users;
         res.status(200).json(userCount);
     });
 }
 
-module.exports = {FetchStats, observer};
+module.exports = { FetchStats, observer };
