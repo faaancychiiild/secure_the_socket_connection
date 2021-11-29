@@ -33,3 +33,11 @@
     * `cd ./authentication-app/api`
     * `npm start`
 
+
+## How jwt tokens work
+When a user hits the root url to fetch the webste statistics:
+
+* App uses middleware
+    * to check user email in database
+    * to check the access token provided
+    * to check the refresh token provided
