@@ -8,7 +8,7 @@ let userCount;
 *subscribe to the observer <IndexObserver> in index.js 
 *
 *this observer is also used in <register> module
-*purpose: TO IMPLEMENT RxJS with Node.js
+*purpose: TO DEMONSTRATE RxJS with Node.js
 */
 const observer = {
     next: () => new Observable(subscriber => {

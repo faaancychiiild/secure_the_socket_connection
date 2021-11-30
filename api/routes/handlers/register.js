@@ -48,7 +48,14 @@ const RegisterHandler = async (req, res) => {
                 });
             });
         });
-        //Launch an observable to listen for registered users
+        /*Launch an observable to listen for registered users 
+        *RxJS ლოგიკა ამ პროექტში გართულებულია 
+        *მხოლოდ სადემონსტრაციოდ, რომ
+        * 1) შეგვიძლია Observer I-ში გამოვაცხადოთ ახალი Observable, 
+        * რომელსაც დავუკავშირებთ Observer II-ს
+        * 2) Observer-Observable წყვილები შეგვიძლია გვქონდეს
+        * სხვადასხვა მოდულებშიც
+        */
         new Observable(subscriber => {
             subscriber.next('new user registered');
         }).subscribe(observer);
