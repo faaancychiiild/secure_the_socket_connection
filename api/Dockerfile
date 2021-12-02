@@ -1,7 +1,8 @@
-FROM node:14
-WORKDIR /app
-COPY package.json package-lock.json ./
-RUN NODE_ENV=production npm ci
-RUN npm install --silent
+ARG VERSION=14.17
+FROM node:${VERSION}
+WORKDIR /app/api
+COPY ["package.json", ".env", "./"]
+RUN npm install --production
 COPY . .
-CMD ["npm", "start"]
+EXPOSE 4000
+ENTRYPOINT ["node", "index"]

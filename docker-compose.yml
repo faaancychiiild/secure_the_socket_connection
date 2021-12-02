@@ -1,0 +1,18 @@
+version: "3"
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: ./Dockerfile
+    image: "auth-api"
+    ports:
+      - "4000:4000"
+  client:
+    build:
+      context: ./client
+      dockerfile: ./Dockerfile
+    image: "auth-client"
+    ports:
+      - "3000:3000"
+    links:
+      - "api:api"

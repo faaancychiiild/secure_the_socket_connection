@@ -4,7 +4,7 @@ const router = require('../routes/router');
 const parser = require('body-parser');
 
 app.use(cors({
-    origin: 'http://localhost:3001'
+    origin: '*'
 }));
 app.use(parser.json());
 app.use('/', router);
